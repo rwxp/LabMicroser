@@ -10,6 +10,7 @@ services:
     depends_on:
       - authservice
       - redis
+      - salchipapitas
 
   authservice:
     build:
@@ -23,3 +24,10 @@ services:
     image: "redis:latest"
     ports:
       - "6379:6379"
+
+  salchipapitas:
+    build:
+      context: ./salchipapitas
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"

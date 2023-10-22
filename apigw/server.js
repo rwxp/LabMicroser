@@ -3,7 +3,7 @@ const axios = require('axios');
 
 const typeDefs = `
   type Query {
-    service1: String
+    service1: [String]
     service2: String
     service3: String
   }
@@ -11,10 +11,17 @@ const typeDefs = `
 
 const resolvers = {
   Query: {
-    service1: (parent, args, context, info) => {
-        console.log(context.token);
-        return "Hola, soy servicio1 Papitas con salchichas!";
-    },
+    service1: async (parent, args, context, info) => {
+      console.log(context.token);
+      try {
+          const response = await axios.get('http://salchipapitas:5000/comestibles');
+          const data = response.data;
+          return [...data.papas, ...data.salchichas];
+      } catch (err) {
+          console.error("Error al obtener datos de salchipapitas", err);
+          return [];
+      }
+  },
     service2: () => "Hola, soy servicio2 Besitos sabor cerezas!",
     service3: () => "Hola, soy servicio3 Cachetada con Trucha !",
   },
