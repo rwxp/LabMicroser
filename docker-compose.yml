@@ -34,3 +34,12 @@ services:
     depends_on:
       - authservice
       - redis
+  besoscerezas:
+    build:
+      context: ./besoscerezas
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redis
+

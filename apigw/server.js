@@ -22,7 +22,20 @@ const resolvers = {
           return [];
       }
   },
-    service2: () => "Hola, soy servicio2 Besitos sabor cerezas!",
+  service2: async () => {
+    try {
+        const response = await axios.get('http://besoscerezas:8080/besos');
+        const data = response.data;
+        let result = "Hola, soy servicio2 Besitos sabor cerezas! Aquí tienes algunos besos y sus frutas asociadas: ";
+        for (const [key, value] of Object.entries(data)) {
+            result += `Beso ${key} -> ${value}, `;
+        }
+        return result.slice(0, -2); // Para eliminar la última coma y espacio
+    } catch (err) {
+        console.error("Error al obtener datos de besoscerezas", err);
+        return "Error al obtener datos de besoscerezas";
+    }
+  },
     service3: () => "Hola, soy servicio3 Cachetada con Trucha !",
   },
 };
