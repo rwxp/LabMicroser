@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   api:
@@ -42,4 +42,11 @@ services:
       - "8080:8080"
     depends_on:
       - redis
-
+  cachetadacontrucha:
+    build:
+      context: ./cachetadacontrucha
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
